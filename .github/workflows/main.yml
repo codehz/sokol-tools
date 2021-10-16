@@ -31,12 +31,18 @@ jobs:
             name: osx
     linux:
         runs-on: ubuntu-latest
+        container:
+            image: alpine:latest
         steps:
+        - name: Prepare environment
+          run: apk add build-base git vim python2 cmake
         - uses: actions/checkout@v1
           with:
             submodules: true
         - name: linux-make-release
-          run:  python fips build linux-make-release
+          run: |
+            python fips build linux-make-release
+            strip /home/runner/work/sokol-tools/fips-deploy/sokol-tools/linux-make-release/sokol-shdc
         - uses: actions/upload-artifact@v2
           with:
             path: /home/runner/work/sokol-tools/fips-deploy/sokol-tools/linux-make-release/sokol-shdc
