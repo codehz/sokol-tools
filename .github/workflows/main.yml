@@ -42,9 +42,9 @@ jobs:
         - name: linux-make-release
           run: |
             python fips build linux-make-release
-            strip /home/runner/work/sokol-tools/fips-deploy/sokol-tools/linux-make-release/sokol-shdc
+            strip /__w/sokol-tools/fips-deploy/sokol-tools/linux-make-release/sokol-shdc
         - uses: actions/upload-artifact@v2
           with:
-            path: /home/runner/work/sokol-tools/fips-deploy/sokol-tools/linux-make-release/sokol-shdc
+            path: /__w/sokol-tools/fips-deploy/sokol-tools/linux-make-release/sokol-shdc
             name: linux
 
