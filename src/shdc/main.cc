@@ -104,6 +104,9 @@ int main(int argc, const char** argv) {
         case format_t::BARE:
             output_err = bare_t::gen(args, inp, spirvcross, bytecode);
             break;
+        case format_t::METADATA:
+            output_err = metadata_t::gen(args, inp, spirvcross, bytecode);
+            break;
         case format_t::SOKOL_ZIG:
             output_err = sokolzig_t::gen(args, inp, spirvcross, bytecode);
             break;

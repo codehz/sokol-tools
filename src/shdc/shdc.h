@@ -107,6 +107,7 @@ struct format_t	{
         SOKOL_DECL,
         SOKOL_IMPL,
         SOKOL_ZIG,
+        METADATA,
         BARE,
         NUM,
         INVALID,
@@ -118,6 +119,7 @@ struct format_t	{
             case SOKOL_DECL:    return "sokol_decl";
             case SOKOL_IMPL:    return "sokol_impl";
             case SOKOL_ZIG:     return "sokol_zig";
+            case METADATA:      return "metadata";
             case BARE:          return "bare";
             default:            return "<invalid>";
         }
@@ -134,6 +136,9 @@ struct format_t	{
         }
         else if (str == "sokol_zig") {
             return SOKOL_ZIG;
+        }
+        else if (str == "metadata") {
+            return METADATA;
         }
         else if (str == "bare") {
             return BARE;
@@ -190,7 +195,7 @@ struct errmsg_t {
     }
     // print error to stdout
     void print(msg_format_t fmt) const {
-        fmt::print("{}\n", as_string(fmt));
+        fmt::print(stderr, "{}\n", as_string(fmt));
     }
     // convert msg_format to string
     static const char* msg_format_to_str(msg_format_t fmt) {
@@ -549,6 +554,12 @@ struct sokolzig_t {
 struct bare_t {
     static errmsg_t gen(const args_t& args, const input_t& inp, const std::array<spirvcross_t,slang_t::NUM>& spirvcross, const std::array<bytecode_t,slang_t::NUM>& bytecode);
 };
+
+/* metadata format generator */
+struct metadata_t {
+    static errmsg_t gen(const args_t& args, const input_t& inp, const std::array<spirvcross_t,slang_t::NUM>& spirvcross, const std::array<bytecode_t,slang_t::NUM>& bytecode);
+};
+
 
 /* utility functions for generators */
 namespace util {
