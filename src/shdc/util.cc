@@ -6,6 +6,15 @@
 namespace shdc {
 namespace util {
 
+bool is_special_filename(const std::string &path) {
+    if (path.length() == 1) {
+        return path[0] == '@';
+    } else if (path.length() > 1) {
+        return path[path.length() - 2] == '/' && path[path.length() - 1] == '-';
+    }
+    return false;
+}
+
 errmsg_t check_errors(const input_t& inp,
                       const spirvcross_t& spirvcross,
                       slang_t::type_t slang)

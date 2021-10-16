@@ -552,6 +552,7 @@ struct bare_t {
 
 /* utility functions for generators */
 namespace util {
+    bool is_special_filename(const std::string &path);
     errmsg_t check_errors(const input_t& inp, const spirvcross_t& spirvcross, slang_t::type_t slang);
     const char* uniform_type_str(uniform_t::type_t type);
     int uniform_type_size(uniform_t::type_t type);

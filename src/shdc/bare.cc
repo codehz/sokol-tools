@@ -89,6 +89,9 @@ errmsg_t bare_t::gen(const args_t& args, const input_t& inp,
                      const std::array<spirvcross_t,slang_t::NUM>& spirvcross,
                      const std::array<bytecode_t,slang_t::NUM>& bytecode)
 {
+    if (util::is_special_filename(args.output)) {
+        return errmsg_t::error(args.input, 0, "cannot output to stdout in bare mode");
+    }
     for (int i = 0; i < slang_t::NUM; i++) {
         slang_t::type_t slang = (slang_t::type_t) i;
         if (args.slang & slang_t::bit(slang)) {
