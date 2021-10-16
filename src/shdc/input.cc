@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
+#include <iterator>
 #include "fmt/format.h"
 #include "pystring.h"
 
@@ -12,7 +13,7 @@ namespace shdc {
 
 static std::string load_file_into_str(const std::string& path) {
     if (util::is_special_filename(path)) {
-        return {std::istream_iterator<char>{std::cin}, {}};
+        return {std::istreambuf_iterator<char>{std::cin}, {}};
     }
     FILE* f = fopen(path.c_str(), "rb");
     if (!f) {
