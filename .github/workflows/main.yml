@@ -41,26 +41,4 @@ jobs:
           with:
             path: fips-deploy/sokol-tools/linux-make-release/sokol-shdc
             name: linux
-    publish:
-        needs: [windows, mac, linux]
-        runs-on: ubuntu-latest
-        steps:
-        - uses: actions/checkout@v1
-          with:
-            repository: codehz/sokol-tools-bin
-            submodules: true
-        - uses: actions/download-artifact@v2
-          with:
-            name: win32
-            path: bin/win32
-        - uses: actions/download-artifact@v2
-          with:
-            name: linux
-            path: bin/linux
-        - uses: actions/download-artifact@v2
-          with:
-            name: osx
-            path: bin/osx
-        - name: Show status
-          run: git status
 
