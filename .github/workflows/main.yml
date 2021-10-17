@@ -47,4 +47,11 @@ jobs:
           with:
             path: /__w/sokol-tools/fips-deploy/sokol-tools/linux-make-release/sokol-shdc
             name: linux
+    publish:
+        needs: [windows, mac, linux]
+        steps:
+        - uses: actions/download-artifact@v2
+        - uses: aquiladev/ipfs-action@v1
+          with:
+            path: ./
 
