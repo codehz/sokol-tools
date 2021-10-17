@@ -55,5 +55,5 @@ jobs:
         - uses: aquiladev/ipfs-action@v0.1.6
           with:
             service: infura
-            path: ./
+            path: ./sokol-tools
 
