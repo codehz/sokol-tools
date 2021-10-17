@@ -28,28 +28,28 @@ static void write_programs(const args_t& args, const input_t& inp, const spirvcr
         const spirvcross_source_t* fs_src = find_spirvcross_source_by_shader_name(prog.fs_name, inp, spirvcross);
         assert(vs_src && fs_src);
         L("program {}:\n", prog.name);
-        L("\tvertex {}, {}:\n", prog.vs_name, vs_src->refl.entry_point);
+        L("  vertex {}, {}:\n", prog.vs_name, vs_src->refl.entry_point);
         const snippet_t& vs_snippet = inp.snippets[vs_src->snippet_index];
         for (const attr_t& attr: vs_src->refl.inputs) {
             if (attr.slot >= 0) {
-                L("\t\tattribute {}, {}, {}, {}\n", attr.name, attr.slot, attr.sem_name, attr.sem_index);
+                L("    attribute {}, {}, {}, {}\n", attr.name, attr.slot, attr.sem_name, attr.sem_index);
             }
         }
         for (const uniform_block_t& ub: vs_src->refl.uniform_blocks) {
-            L("\t\tuniform {}, {}\n", ub.name, ub.slot);
+            L("    uniform {}, {}\n", ub.name, ub.slot);
         }
         for (const image_t& img: vs_src->refl.images) {
-            L("\t\timage {}, {}, {}, {}\n", img.name, img.slot, img.type, img.base_type);
+            L("    image {}, {}, {}, {}\n", img.name, img.slot, img.type, img.base_type);
         }
-        L("\t\tdiscard\n");
-        L("\tfragment {}, {}:\n", prog.fs_name, fs_src->refl.entry_point);
+        L("    discard\n");
+        L("  fragment {}, {}:\n", prog.fs_name, fs_src->refl.entry_point);
         for (const uniform_block_t& ub: fs_src->refl.uniform_blocks) {
-            L("\t\tuniform {}, {}\n", ub.name, ub.slot);
+            L("    uniform {}, {}\n", ub.name, ub.slot);
         }
         for (const image_t& img: fs_src->refl.images) {
-            L("\t\timage {}, {}, {}, {}\n", img.name, img.slot, img.type, img.base_type);
+            L("    image {}, {}, {}, {}\n", img.name, img.slot, img.type, img.base_type);
         }
-        L("\t\tdiscard\n");
+        L("    discard\n");
     }
 }
 
@@ -60,11 +60,11 @@ static void write_uniform_blocks(const input_t& inp, const spirvcross_t& spirvcr
         for (const uniform_t& uniform: ub.uniforms) {
             int next_offset = uniform.offset;
             if (next_offset > cur_offset) {
-                L("\tpadding {}, {}\n", cur_offset, next_offset - cur_offset);
+                L("  padding {}, {}\n", cur_offset, next_offset - cur_offset);
                 cur_offset = next_offset;
             }
             if (inp.type_map.count(uniform_type_str(uniform.type)) > 0) {
-                L("\tfield {}, {}, {}\n", uniform.name, inp.type_map.at(uniform_type_str(uniform.type)), uniform.array_count);
+                L("  field {}, {}, {}\n", uniform.name, inp.type_map.at(uniform_type_str(uniform.type)), uniform.array_count);
             }
             else {
                 // default type names (float)
@@ -75,16 +75,16 @@ static void write_uniform_blocks(const input_t& inp, const spirvcross_t& spirvcr
                     case uniform_t::FLOAT3:  base_count = 3; break;
                     case uniform_t::FLOAT4:  base_count = 4; break;
                     case uniform_t::MAT4:    base_count = 16; break;
-                    default:                 L("\t#invalidfield\n"); break;
+                    default:                 L("  #invalidfield\n"); break;
                 }
                 int count = uniform.array_count * base_count;
-                L("\tfield {}, float, {}\n", uniform.name, count);
+                L("  field {}, float, {}\n", uniform.name, count);
             }
             cur_offset += uniform_type_size(uniform.type) * uniform.array_count;
         }
         const int round16 = roundup(cur_offset, 16);
         if (cur_offset != round16) {
-            L("\tpadding {}, {}\n", cur_offset, round16-cur_offset);
+            L("  padding {}, {}\n", cur_offset, round16-cur_offset);
         }
     }
 }
@@ -100,13 +100,13 @@ static void hexdump(T data) {
     for (auto ch : data) {
         hex += fmt::format("{:02x}", ch);
         if ((i & 15) == 15) {
-            L("\tput \"{}\"\n", hex);
+            L("  put \"{}\"\n", hex);
             hex.clear();
         }
         i++;
     }
     if (!hex.empty()) {
-        L("\tput \"{}\"\n", hex);
+        L("  put \"{}\"\n", hex);
     }
 }
 
