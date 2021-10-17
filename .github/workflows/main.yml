@@ -52,7 +52,7 @@ jobs:
         needs: [windows, mac, linux]
         steps:
         - uses: actions/download-artifact@v2
-        - uses: aquiladev/ipfs-action
+        - uses: aquiladev/ipfs-action@v0.1.6
           with:
             service: infura
             path: ./
