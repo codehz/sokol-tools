@@ -32,7 +32,7 @@ static void write_header(const args_t& args, const input_t& inp, const spirvcros
         const spirvcross_source_t* fs_src = find_spirvcross_source_by_shader_name(prog.fs_name, inp, spirvcross);
         assert(vs_src && fs_src);
         L("program {}\n", prog.name);
-        L("\tvertex {}\n", prog.vs_name);
+        L("\tvertex {} = {}\n", prog.vs_name, vs_src->refl.entry_point);
         const snippet_t& vs_snippet = inp.snippets[vs_src->snippet_index];
         for (const attr_t& attr: vs_src->refl.inputs) {
             if (attr.slot >= 0) {
@@ -48,7 +48,7 @@ static void write_header(const args_t& args, const input_t& inp, const spirvcros
             L("\t\t\ttype {}\n", img.type);
             L("\t\t\tsampler {}\n", img.base_type);
         }
-        L("\tfragment {}\n", prog.fs_name);
+        L("\tfragment {} = {}\n", prog.fs_name, fs_src->refl.entry_point);
         for (const uniform_block_t& ub: fs_src->refl.uniform_blocks) {
             L("\t\tuniform {} = {}\n", ub.name, ub.slot);
         }
