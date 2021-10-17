@@ -107,6 +107,7 @@ struct format_t	{
         SOKOL_DECL,
         SOKOL_IMPL,
         SOKOL_ZIG,
+        SOKOL_NIM,
         METADATA,
         BARE,
         NUM,
@@ -119,6 +120,7 @@ struct format_t	{
             case SOKOL_DECL:    return "sokol_decl";
             case SOKOL_IMPL:    return "sokol_impl";
             case SOKOL_ZIG:     return "sokol_zig";
+            case SOKOL_NIM:     return "sokol_nim";
             case METADATA:      return "metadata";
             case BARE:          return "bare";
             default:            return "<invalid>";
@@ -136,6 +138,9 @@ struct format_t	{
         }
         else if (str == "sokol_zig") {
             return SOKOL_ZIG;
+        }
+        else if (str == "nim") {
+            return SOKOL_NIM;
         }
         else if (str == "metadata") {
             return METADATA;
@@ -557,6 +562,11 @@ struct bare_t {
 
 /* metadata format generator */
 struct metadata_t {
+    static errmsg_t gen(const args_t& args, const input_t& inp, const std::array<spirvcross_t,slang_t::NUM>& spirvcross, const std::array<bytecode_t,slang_t::NUM>& bytecode);
+};
+
+/* metadata format generator */
+struct nim_t {
     static errmsg_t gen(const args_t& args, const input_t& inp, const std::array<spirvcross_t,slang_t::NUM>& spirvcross, const std::array<bytecode_t,slang_t::NUM>& bytecode);
 };
 
