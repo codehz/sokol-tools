@@ -62,7 +62,7 @@ static void write_header(const args_t& args, const input_t& inp, const spirvcros
 
 static void write_uniform_blocks(const input_t& inp, const spirvcross_t& spirvcross, slang_t::type_t slang) {
     for (const uniform_block_t& ub: spirvcross.unique_uniform_blocks) {
-        L("struct {}\n", ub.name);
+        L("struct {} = {}\n", ub.name, ub.size);
         int cur_offset = 0;
         for (const uniform_t& uniform: ub.uniforms) {
             int next_offset = uniform.offset;
