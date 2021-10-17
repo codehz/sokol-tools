@@ -32,7 +32,7 @@ static void write_programs(const args_t& args, const input_t& inp, const spirvcr
         const snippet_t& vs_snippet = inp.snippets[vs_src->snippet_index];
         for (const attr_t& attr: vs_src->refl.inputs) {
             if (attr.slot >= 0) {
-                L("\t\tattribute {}, {}, {}, {}:\n", attr.name, attr.slot, attr.sem_name, attr.sem_index);
+                L("\t\tattribute {}, {}, {}, {}\n", attr.name, attr.slot, attr.sem_name, attr.sem_index);
             }
         }
         for (const uniform_block_t& ub: vs_src->refl.uniform_blocks) {
@@ -41,6 +41,7 @@ static void write_programs(const args_t& args, const input_t& inp, const spirvcr
         for (const image_t& img: vs_src->refl.images) {
             L("\t\timage {}, {}, {}, {}\n", img.name, img.slot, img.type, img.base_type);
         }
+        L("\t\tdiscard\n");
         L("\tfragment {}, {}:\n", prog.fs_name, fs_src->refl.entry_point);
         for (const uniform_block_t& ub: fs_src->refl.uniform_blocks) {
             L("\t\tuniform {}, {}\n", ub.name, ub.slot);
@@ -48,6 +49,7 @@ static void write_programs(const args_t& args, const input_t& inp, const spirvcr
         for (const image_t& img: fs_src->refl.images) {
             L("\t\timage {}, {}, {}, {}\n", img.name, img.slot, img.type, img.base_type);
         }
+        L("\t\tdiscard\n");
     }
 }
 
