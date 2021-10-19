@@ -78,7 +78,7 @@ static void write_uniform_blocks(const input_t& inp, const spirvcross_t& spirvcr
                     default:                 L("  #invalidfield\n"); break;
                 }
                 int count = uniform.array_count * base_count;
-                L("  field {}, float, {}\n", uniform.name, count);
+                L("  field {}, float32, {}\n", uniform.name, count);
             }
             cur_offset += uniform_type_size(uniform.type) * uniform.array_count;
         }
