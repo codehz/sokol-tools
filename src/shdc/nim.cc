@@ -51,7 +51,7 @@ static void write_programs(const args_t& args, const input_t& inp, const spirvcr
         }
         for (const attr_t& attr: fs_src->refl.outputs) {
             if (attr.slot >= 0) {
-                L("    output {}, {}, {}, {}\n", attr.name, attr.slot);
+                L("    output {}, {}\n", attr.name, attr.slot);
             }
         }
         L("    discard\n");
