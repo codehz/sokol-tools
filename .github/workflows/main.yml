@@ -52,8 +52,16 @@ jobs:
         needs: [windows, mac, linux]
         steps:
         - uses: actions/download-artifact@v2
-        - name: publish
+        - name: rename
           run: |
-            FILES=$(find * -type f | grep -v ' ' | sed -e 's/ /\\ /g' | awk -v q="'" '{print " -F " q "file=@\"" $0 "\";filename=\"" $0 "\"" q}')
-            curl "https://ipfs.infura.io:5001/api/v0/add?pin=true&recursive=true&wrap-with-directory=true" -vv -X POST -H "Content-Type: multipart/form-data" $FILES -C -
+            mv linux/sokol-shdc sokol-shdc-linux
+            mv osx/sokol-shdc sokol-shdc-osx
+            mv win32/sokol-shdc.exe sokol-shdc-win32.exe
+            rm -rf linux osx win32
+        - name: publish
+          uses: marvinpinto/action-automatic-releases@v1.2.1
+          with:
+            repo_token: "${{ secrets.GITHUB_TOKEN }}"
+            automatic_release_tag: build-${{ github.sha }}
+            files: *
 
